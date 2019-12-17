@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_get/WeatherData.dart';
-import 'package:country_code_picker/country_code_picker.dart';
 
 class ViewDetails extends StatefulWidget {
   final LatLng selectedLocation;
@@ -29,7 +28,7 @@ class ViewDetailsState extends State<ViewDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Weather Data"),
+        title: Text("Weather Details"),
       ),
       body: Container(
         child: isLoading
@@ -39,9 +38,10 @@ class ViewDetailsState extends State<ViewDetails> {
             : Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/cover7.jpg'),
-                    fit: BoxFit.cover,
-                  ),
+                      image: AssetImage('assets/cover7.jpg'),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          Colors.white.withOpacity(0.3), BlendMode.lighten)),
                 ),
                 height: double.infinity,
                 width: double.infinity,
@@ -57,7 +57,11 @@ class ViewDetailsState extends State<ViewDetails> {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white.withOpacity(0.5)),
                         child: Text(
-                          responseData.name + ', ' + responseData.sys.country,
+                          responseData.name == null
+                              ? ''
+                              : responseData.name +
+                                  ', ' +
+                                  responseData.sys.country,
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
@@ -81,38 +85,59 @@ class ViewDetailsState extends State<ViewDetails> {
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       Container(
-                        height: 100,
                         margin: EdgeInsets.all(20),
                         child: Row(
                           children: <Widget>[
                             Expanded(
                               child: Container(
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
                                       toCelsius(responseData.main.tempMin),
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
-                                    ), 
+                                    ),
                                     Text('Min')
                                   ],
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: Container(),
+                            Container(
+                              height: 120,
+                              width: 120,
+                              padding: EdgeInsets.only(left: 5, right: 5),
+                              decoration: BoxDecoration(
+                                  color: Colors.blueAccent.withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(40),
+                                  border: Border.all(
+                                      color: Colors.black,
+                                      width: 3,
+                                      style: BorderStyle.solid)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    toCelsius(responseData.main.temp),
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
                             Expanded(
                               child: Container(
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
                                       toCelsius(responseData.main.tempMax),
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
-                                    ), 
+                                    ),
                                     Text('Max')
                                   ],
                                 ),
@@ -120,7 +145,19 @@ class ViewDetailsState extends State<ViewDetails> {
                             ),
                           ],
                         ),
-                      )
+                      ),
+                      displayDetail(
+                        'Pressure',
+                        getHgMm(responseData.main.pressure),
+                      ),
+                      displayDetail(
+                        'Humidity',
+                        '92%',
+                      ),
+                      displayDetail(
+                        'Wind Speed',
+                        responseData.wind.speed.toString() + ' ms-1',
+                      ),
                     ],
                   ),
                 ),
@@ -149,5 +186,22 @@ class ViewDetailsState extends State<ViewDetails> {
     return (kelivin - 273.15).toStringAsFixed(1) + " \u2103";
   }
 
+  displayDetail(String attribute, String value) {
+    return Container(
+      margin: EdgeInsets.all(5),
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white.withOpacity(0.5)),
+      child: Text(
+        attribute + '  :  ' + value,
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
 
+  getHgMm(int pascal) {
+    return (pascal * 0.00750062).toStringAsFixed(2) + " mmHg";
+  }
 }

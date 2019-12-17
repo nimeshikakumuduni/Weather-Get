@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:weather_get/ViewDetails.dart';
 
@@ -19,7 +20,13 @@ class MapViewState extends State<MapView> {
     zoom: 9.4746,
   );
 
-  LatLng selectedLocation;
+  LatLng selectedLocation = null;
+
+  @override
+  void initState() {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +63,27 @@ class MapViewState extends State<MapView> {
         child: Icon(Icons.ac_unit),
         backgroundColor: Colors.blueAccent,
         onPressed: () {
+          if (selectedLocation == null) {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Please select location!'),
+                    content: Text(
+                        'Please select location on map to get weather details!'),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('ok'),
+                      )
+                    ],
+                  );
+                });
+            return;
+          }
+
           Navigator.push(
             context,
             MaterialPageRoute(
