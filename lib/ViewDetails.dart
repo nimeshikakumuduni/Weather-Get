@@ -156,7 +156,7 @@ class ViewDetailsState extends State<ViewDetails> {
                       ),
                       displayDetail(
                         'Wind Speed',
-                        responseData.wind.speed.toString() + ' ms-1',
+                        responseData.wind.speed.toString() + ' m/s',
                       ),
                     ],
                   ),

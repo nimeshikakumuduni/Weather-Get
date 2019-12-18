@@ -59,39 +59,48 @@ class MapViewState extends State<MapView> {
           markers: Set<Marker>.of(markers),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.ac_unit),
-        backgroundColor: Colors.blueAccent,
-        onPressed: () {
-          if (selectedLocation == null) {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Please select location!'),
-                    content: Text(
-                        'Please select location on map to get weather details!'),
-                    actions: <Widget>[
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('ok'),
-                      )
-                    ],
-                  );
-                });
-            return;
-          }
+      floatingActionButton: selectedLocation == null
+          ? Container()
+          : Container(
+            child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  side: BorderSide(color: Colors.white)
+                ),
+                child: Text("Show Weather Details", style:TextStyle(fontWeight:FontWeight.bold, color: Colors.white)),
+                color: Colors.blueGrey,
+                onPressed: () {
+                  if (selectedLocation == null) {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Please select location!'),
+                            content: Text(
+                                'Please select location on map to get weather details!'),
+                            actions: <Widget>[
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('ok'),
+                              )
+                            ],
+                          );
+                        });
+                    return;
+                  }
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => ViewDetails(selectedLocation),
-            ),
-          );
-        },
-      ),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          ViewDetails(selectedLocation),
+                    ),
+                  );
+                },
+              ),
+          ),
     );
   }
 }
