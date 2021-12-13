@@ -79,7 +79,7 @@ class MapViewState extends State<MapView> {
                             content: Text(
                                 'Please select location on map to get weather details!'),
                             actions: <Widget>[
-                              FlatButton(
+                              TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
