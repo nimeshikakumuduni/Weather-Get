@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:weather_get/Map.dart';
 
+final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    primary: Colors.blueAccent,
+    shape: RoundedRectangleBorder(
+      borderRadius: new BorderRadius.circular(18.0),
+    ),
+    side: BorderSide(color: Colors.black));
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -62,10 +69,8 @@ class HomePage extends StatelessWidget {
                 margin: EdgeInsets.only(top: 40),
                 height: 60,
                 width: 270,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.black)),
+                child: ElevatedButton(
+                  style: raisedButtonStyle,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -74,7 +79,6 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   },
-                  color: Colors.blueAccent,
                   child: Text(
                     'Select Location',
                     style: TextStyle(

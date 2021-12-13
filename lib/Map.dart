@@ -12,6 +12,13 @@ class MapView extends StatefulWidget {
   }
 }
 
+final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+  primary: Colors.blueGrey,
+  shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: BorderSide(color: Colors.white)),
+);
+
 class MapViewState extends State<MapView> {
   Completer<GoogleMapController> _controller = Completer();
   List<Marker> markers = <Marker>[];
@@ -20,7 +27,7 @@ class MapViewState extends State<MapView> {
     zoom: 9.4746,
   );
 
-  LatLng selectedLocation = null;
+  LatLng selectedLocation;
 
   @override
   void initState() {
@@ -62,13 +69,11 @@ class MapViewState extends State<MapView> {
       floatingActionButton: selectedLocation == null
           ? Container()
           : Container(
-            child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(color: Colors.white)
-                ),
-                child: Text("Show Weather Details", style:TextStyle(fontWeight:FontWeight.bold, color: Colors.white)),
-                color: Colors.blueGrey,
+              child: ElevatedButton(
+                style: raisedButtonStyle,
+                child: Text("Show Weather Details",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white)),
                 onPressed: () {
                   if (selectedLocation == null) {
                     showDialog(
@@ -100,7 +105,7 @@ class MapViewState extends State<MapView> {
                   );
                 },
               ),
-          ),
+            ),
     );
   }
 }
