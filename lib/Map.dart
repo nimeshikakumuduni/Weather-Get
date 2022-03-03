@@ -62,13 +62,19 @@ class MapViewState extends State<MapView> {
       floatingActionButton: selectedLocation == null
           ? Container()
           : Container(
-            child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(color: Colors.white)
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.blueGrey),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: BorderSide(color: Colors.white)),
+                  ),
                 ),
-                child: Text("Show Weather Details", style:TextStyle(fontWeight:FontWeight.bold, color: Colors.white)),
-                color: Colors.blueGrey,
+                child: Text("Show Weather Details",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white)),
                 onPressed: () {
                   if (selectedLocation == null) {
                     showDialog(
@@ -79,7 +85,7 @@ class MapViewState extends State<MapView> {
                             content: Text(
                                 'Please select location on map to get weather details!'),
                             actions: <Widget>[
-                              FlatButton(
+                              TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -100,7 +106,7 @@ class MapViewState extends State<MapView> {
                   );
                 },
               ),
-          ),
+            ),
     );
   }
 }

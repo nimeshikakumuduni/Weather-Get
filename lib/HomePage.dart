@@ -62,10 +62,17 @@ class HomePage extends StatelessWidget {
                 margin: EdgeInsets.only(top: 40),
                 height: 60,
                 width: 270,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.black)),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blueAccent),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.black)),
+                    ),
+                  ),
+
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -74,7 +81,7 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   },
-                  color: Colors.blueAccent,
+                  // color: Colors.blueAccent,
                   child: Text(
                     'Select Location',
                     style: TextStyle(
