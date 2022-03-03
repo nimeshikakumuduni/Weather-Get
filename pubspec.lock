@@ -39,7 +39,7 @@ packages:
   charcode:
     dependency: transitive
     description:
-      name: charcode
+      name: characters
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
@@ -60,7 +60,7 @@ packages:
   crypto:
     dependency: transitive
     description:
-      name: crypto
+      name: collection
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"

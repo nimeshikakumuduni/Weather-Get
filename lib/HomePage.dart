@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:weather_get/Map.dart';
 
+final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    primary: Colors.blueAccent,
+    shape: RoundedRectangleBorder(
+      borderRadius: new BorderRadius.circular(18.0),
+    ),
+    side: BorderSide(color: Colors.black));
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
